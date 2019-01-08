@@ -1,0 +1,68 @@
+---
+- hosts: loadbalancer
+  tasks:
+    - name: Verify nginx service
+      command: service nginx status
+    
+    - name: Verify nginx listen on port 80
+      wait_for: port=80 timeout=1
+
+- hosts: webserver
+  tasks:
+    - name: Verify apache2 service
+      command: service apache2 status
+
+    - name: Verify apache2 listen on port 80
+      wait_for: port=80 timeout=1
+
+- hosts: database
+  tasks:
+    - name: Verify mysql service
+      command: service mysql status
+
+    - name: Verify mysql listen on port 3306
+      wait_for: port=3306 timeout=1
+
+- hosts: control
+  tasks:
+    - name: Verify end 2 end response
+      uri: url=http://{{item}} return_content=yes
+      with_items: 
+        - "{{groups.loadbalancer}}"
+      register: lb_index
+    
+    - fail: msg="Failed to return content"
+      when: "'Hello, from sunny' not in item.content"
+      with_items: "{{lb_index.results}}"
+
+    - name: Verify database response
+      uri: url=http://{{item}}/db return_content=yes
+      with_items: 
+        - "{{groups.loadbalancer}}"
+      register: lb_db
+    
+    - fail: msg="Failed to connect to database"
+      when: "'Database Connected from' not in item.content"
+      with_items: "{{lb_db.results}}"
+
+- hosts: loadbalancer
+  tasks:
+    - name: Verify backend response
+      uri: url=http://{{item}} return_content=yes
+      with_items:
+        - "{{groups.webserver}}"
+      register: app_index
+    
+    - fail: msg="Failed to return content"
+      when: "'Hello, from sunny {{item.item}}!' not in item.content"
+      with_items: "{{app_index.results}}"    
+
+    - name: Verify database response
+      uri: url=http://{{item}}/db return_content=yes
+      with_items:
+        - "{{groups.webserver}}"
+      register: app_db
+    
+    - fail: msg="Failed to connect to database"
+      when: "'Database Connected from {{item.item}}!' not in item.content"
+      with_items: "{{app_db.results}}"   

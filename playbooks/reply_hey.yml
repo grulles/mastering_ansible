@@ -1,0 +1,6 @@
+---
+- hosts: control
+
+  tasks:
+    - shell: echo "hey {{ item }}"
+      with_items: groups.webserver
