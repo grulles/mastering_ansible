@@ -20,4 +20,4 @@
   mysql_db: name={{db_name}} state=present 
 
 - name: Create user 
-  mysql_user: name={{db_user_name}} password={{db_user_password}} priv={{db_name}}.*:ALL {{db_host}}='%' state=present
+  mysql_user: name={{db_user_name}} password={{db_user_password}} priv={{db_name}}.*:ALL host='{{db_user_host}}' state=present
