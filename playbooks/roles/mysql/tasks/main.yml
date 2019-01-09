@@ -9,7 +9,8 @@
   apt: name=mysql-server state=present update_cache=yes
 
 - name: Mysql need to listen on all interface
-  lineinfile: dest=/etc/mysql/mariadb.conf.d/50-server.cnf regexp=^bind-address line="bind-address = 0.0.0.0"
+  lineinfile: dest=/etc/mysql/mariadb.conf.d/50-server.cnf regexp=^bind-address 
+                line="bind-address = {{ansible_eth0.ipv4.address}}"
   notify: restart mysql
 
 - name: Ensure mysql is started and comes up when server was rebooted
