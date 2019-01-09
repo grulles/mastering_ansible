@@ -1,24 +1,4 @@
 ---
-- hosts: loadbalancer
-  tasks:
-    - name: Install nginx
-      apt: name=nginx state=present update_cache=yes
-
-    - name: Ensure nginx is started and comes up when server was rebooted
-      service: name=nginx state=started enabled=yes
-  
-    - name: nginx loadbalancer configuration
-      template: src=/home/grulles/mastering_ansible/templates/nginx.conf.j2 dest=/etc/nginx/sites-available/demo mode=0644
-      notify: restart nginx
-
-    - name: Desactivate default nginx site
-      file: path=/etc/nginx/sites-enabled/default state=absent
-      notify: restart nginx
-
-    - name: activate demo nginx site
-      file: src=/etc/nginx/sites-available/demo dest=/etc/nginx/sites-enabled/demo state=link
-      notify: restart nginx
-  
-  handlers:
-    - name: restart nginx
-      service: name=nginx state=restarted
+- hosts: loadbalancer  
+  roles:
+    - nginx
