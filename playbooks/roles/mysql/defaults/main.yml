@@ -1,2 +1,6 @@
 ---
 # defaults file for mysql
+db_name: my_db_demo
+db_user_name: dbuser
+db_user_password: mypassword
+db_user_host: localhost
