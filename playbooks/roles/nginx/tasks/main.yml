@@ -16,8 +16,20 @@
   with_dict: "{{ sites }}"
   notify: restart nginx
 
-- name: Desactivate default nginx site
-  file: path=/etc/nginx/sites-enabled/default state=absent
+# Cette tache permet de s'assurer qu'il n'y a qu'un site configurer. 
+# Dans le lab nous avons demo creer depuis la stack ansible hardcode
+# et myapp qui provient du dictionnaire site => "{{sites}}"
+# Ici on liste ligne pas ligne les site enabled 
+- name: get active sites
+  shell: ls -1 /etc/nginx/sites-enabled/
+  register: active
+
+# Ici on supprime les sites enabled. La liste est retournee depuis le registre: active
+# Mais uniquement si la valeur n'est pas la clé parent du dictionnaire site.
+- name: Desactivate  nginx sites
+  file: path=/etc/nginx/sites-enabled/{{item}} state=absent
+  with_items: "{{active.stdout_lines}}"
+  when: item not in sites 
   notify: restart nginx
 
 - name: activate  nginx site
