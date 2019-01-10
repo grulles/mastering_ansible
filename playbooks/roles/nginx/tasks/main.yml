@@ -5,8 +5,11 @@
     msg: "{{ item.key }} - {{ item.value }}"
   with_dict: "{{ sites }}"
 
-- name: Install nginx
-  apt: name=nginx state=present update_cache=yes
+- name: Install nginx + VIM
+  apt: name={{item}} state=present update_cache=yes
+  with_items:
+    - nginx
+    - vim
 
 - name: nginx loadbalancer configuration
   template: src=nginx.conf.j2 dest=/etc/nginx/sites-available/{{item.key}} mode=0644

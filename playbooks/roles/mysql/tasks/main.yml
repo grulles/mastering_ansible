@@ -1,9 +1,10 @@
 ---
-- name: Install tools
+- name: Install tools + VIM
   apt: name={{item}} state=present update_cache=yes
   with_items:
     - net-tools
     - python-mysqldb 
+    - vim
 
 - name: Install mysql-server
   apt: name=mysql-server state=present update_cache=yes

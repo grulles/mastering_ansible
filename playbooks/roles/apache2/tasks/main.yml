@@ -1,10 +1,11 @@
 ---
 # tasks file for apache2
-- name: Install web components
+- name: Install web components + VIM
   apt: name={{item}} state=present update_cache=yes
   with_items:
     - apache2
     - libapache2-mod-wsgi
+    - vim
 
 - name: Ensure modd_wsgi is enabled
   apache2_module: state=present name=wsgi
