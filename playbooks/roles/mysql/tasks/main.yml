@@ -20,4 +20,6 @@
   mysql_db: name={{db_name}} state=present 
 
 - name: Create user 
+# Les variables sont définies dans default et dans le playbook database.yml
+# Celles definies dans le playbook sont prioriraires. 
   mysql_user: name={{db_user_name}} password={{db_user_password}} priv={{db_name}}.*:ALL host='{{db_user_host}}' state=present

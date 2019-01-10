@@ -1,2 +1,8 @@
 ---
 # defaults file for nginx
+# sites est un est le top level ou dictionnaire
+# myapp est la clé et frontend est un dictionnaire embarqué. 
+sites:
+  myapp:
+    frontend: 80
+    backend: 80
