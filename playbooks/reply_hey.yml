@@ -1,6 +1,13 @@
 ---
 - hosts: control
-
+  gather_facts: false
   tasks:
-    - shell: echo "hey {{ item }}"
+    - name: Reply hey
+      shell: echo "hey {{ item }}"
       with_items: groups.webserver
+
+    - name: Reply ho
+      shell: echo "ho {{ item }}"
+      with_items: groups.webserver
+      
+     

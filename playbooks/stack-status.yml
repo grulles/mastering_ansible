@@ -1,5 +1,7 @@
 ---
 - hosts: loadbalancer
+  # Pas besoin de récuperer les facts car on ne les utilises pas ici
+  gather_facts: false 
   tasks:
     - name: Verify nginx service
       command: service nginx status
@@ -8,6 +10,7 @@
       wait_for: port=80 timeout=1
 
 - hosts: webserver
+  gather_facts: false 
   tasks:
     - name: Verify apache2 service
       command: service apache2 status
@@ -16,6 +19,7 @@
       wait_for: port=80 timeout=1
 
 - hosts: database
+# Ici il faut récuperer les facts car ansible_eth0.ipv4.address en est une 
   tasks:
     - name: Verify mysql service
       command: service mysql status
@@ -24,6 +28,7 @@
       wait_for: host={{ansible_eth0.ipv4.address}}  port=3306 timeout=1
 
 - hosts: control
+  gather_facts: false 
   tasks:
     - name: Verify end 2 end response
       uri: url=http://{{item}} return_content=yes
@@ -46,6 +51,7 @@
       with_items: "{{lb_db.results}}"
 
 - hosts: loadbalancer
+  gather_facts: false   
   tasks:
     - name: Verify backend response
       uri: url=http://{{item}} return_content=yes
