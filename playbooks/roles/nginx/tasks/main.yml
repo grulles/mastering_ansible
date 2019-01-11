@@ -28,6 +28,8 @@
   changed_when: "active.stdout_lines != sites.keys()"
   register: active
 
+#- debug: var=active.stdout_lines
+- debug: var=vars
 # Ici on supprime les sites enabled. La liste est retournee depuis le registre: active
 # Mais uniquement si la valeur n'est pas la clé parent du dictionnaire site.
 - name: Desactivate  nginx sites
