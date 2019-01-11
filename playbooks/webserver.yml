@@ -1,4 +1,6 @@
 ---
+# Ici les valriables non pas ete declarees donc 
+# on se doit d'utiliser variable: valeur.
 - hosts: webserver 
   roles:
     - apache2

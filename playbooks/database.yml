@@ -1,4 +1,7 @@
 ---
+# Ici les variables ont deja ete declaree dans roles/defaults
+# donc on specifie les valeurs associees a chacune
+# variable=valeur
 - hosts: database
   roles:
     - { role: mysql, db_name=demo, db_user_name=demo, db_user_password=demo, db_user_host= '%'}
