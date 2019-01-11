@@ -1,0 +1,6 @@
+---
+# Ce sont les variables qui seront utilisees
+# pour l'ensemble de notre application.
+db_name: demo
+db_user: demo
+db_pass: demo

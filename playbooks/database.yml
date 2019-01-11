@@ -2,6 +2,11 @@
 # Ici les variables ont deja ete declaree dans roles/defaults
 # donc on specifie les valeurs associees a chacune
 # variable=valeur
+# - { role: mysql, db_name=demo, db_user_name=demo, db_user_password=demo, db_user_host= '%'}
+# Maintenat nous passons via des variables group_vars
 - hosts: database
   roles:
-    - { role: mysql, db_name=demo, db_user_name=demo, db_user_password=demo, db_user_host= '%'}
+    - role: mysql
+      db_user_name: "{{ db_user }}"
+      db_user_password: "{{ db_pass }}"
+      db_user_host: '%'

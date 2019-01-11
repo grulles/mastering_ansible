@@ -1,7 +1,9 @@
 ---
 # Ici les valriables non pas ete declarees donc 
 # on se doit d'utiliser variable: valeur.
+# - {role: demo_app, db_name: demo, db_user: demo, db_pass: demo}
+# maintenant avec les group_vars
 - hosts: webserver 
   roles:
     - apache2
-    - {role: demo_app, db_name: demo, db_user: demo, db_pass: demo}
+    - demo_app
