@@ -1,4 +1,13 @@
 ---
+# Pour apt au lieu de mettre à jour le cache a chaque execution
+# on va le conserver 24h en cache.
+# on pourra donc supprimer update_cache=yes dans tous les autres playbooks !!! (./roles/{{stack}}/tasks/main.yml)
+- hosts: all 
+  gather_facts: false
+  tasks:
+    - name: update apt cache
+      apt: update_cache=yes cache_valid_time=86400
+
 - include: database.yml
 - include: loadbalancer.yml
 - include: webserver.yml
