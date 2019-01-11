@@ -2,9 +2,14 @@
 - hosts: loadbalancer
   # Pas besoin de récuperer les facts car on ne les utilises pas ici
   gather_facts: false 
+  
   tasks:
     - name: Verify nginx service
       command: service nginx status
+      # Si la commande retourne 0 alors c'est OK et pas changed 
+      # command: permet de lancer des binaires linux, mais ansible de récupère pas le code retour
+      # il suppose donc un changement. Ici on lui demande de retourner donc OK si 0 
+      changed_when: false
     
     - name: Verify nginx listen on port 80
       wait_for: port=80 timeout=1
@@ -14,6 +19,7 @@
   tasks:
     - name: Verify apache2 service
       command: service apache2 status
+      changed_when: false
 
     - name: Verify apache2 listen on port 80
       wait_for: port=80 timeout=1
@@ -23,6 +29,7 @@
   tasks:
     - name: Verify mysql service
       command: service mysql status
+      changed_when: false
 
     - name: Verify mysql listen on port 3306
       wait_for: host={{ansible_eth0.ipv4.address}}  port=3306 timeout=1

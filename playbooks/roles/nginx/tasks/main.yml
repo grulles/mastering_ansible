@@ -22,6 +22,10 @@
 # Ici on liste ligne pas ligne les site enabled 
 - name: get active sites
   shell: ls -1 /etc/nginx/sites-enabled/
+# Ici on demande à ansible de retourner changed si et seulement si un site à bien ete supprimé
+# On ne conserve que myapp qui correspond sites.keys() 
+# Voir fichier ../defaults/main.yml
+  changed_when: "active.stdout_lines != sites.keys()"
   register: active
 
 # Ici on supprime les sites enabled. La liste est retournee depuis le registre: active
