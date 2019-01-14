@@ -1,6 +1,6 @@
 ---
 # tasks file for apache2
-- name: Install web components + VIM
+- name: Install web components + VIM + WGET
   apt: name={{item}} state=present
   with_items:
     - apache2
