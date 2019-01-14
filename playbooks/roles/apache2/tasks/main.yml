@@ -7,6 +7,7 @@
     - libapache2-mod-wsgi
     - vim
     - wget
+    - default-jre
 
 - name: Ensure modd_wsgi is enabled
   apache2_module: state=present name=wsgi
