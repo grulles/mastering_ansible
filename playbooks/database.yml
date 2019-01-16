@@ -4,6 +4,7 @@
 # variable=valeur
 # - { role: mysql, db_name=demo, db_user_name=demo, db_user_password=demo, db_user_host= '%'}
 # Maintenat nous passons via des variables group_vars
+# Pour un test 
 - hosts: database
   roles:
     - role: mysql
