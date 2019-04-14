@@ -10,3 +10,6 @@ db01
 
 [control]
 lxstation ansible_connection=local
+
+[ora_vm]
+oravm1
